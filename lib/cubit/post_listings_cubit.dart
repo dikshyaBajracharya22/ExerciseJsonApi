@@ -3,7 +3,7 @@ import 'package:exercise_json/cubit/post_listings_state.dart';
 import 'package:meta/meta.dart';
 
 import '../model/post_model.dart';
-import '../repository/post_repo.dart';
+import '../repository/posts_repo.dart';
 
 class NoteListingCubit extends Cubit<NoteListingState> {
   final NotesRepository notesRepository;

@@ -1,3 +1,5 @@
+import 'package:exercise_json/model/comments.dart';
+
 import '../model/post_model.dart';
 
 abstract class NoteListingState {}
@@ -16,4 +18,9 @@ class NoteSuccessState extends NoteListingState {
   final List<Notes> notes;
 
   NoteSuccessState({required this.notes});
+}
+
+class CommentSuccessState extends NoteListingState {
+  final List<Comments> comments;
+  CommentSuccessState({required this.comments});
 }

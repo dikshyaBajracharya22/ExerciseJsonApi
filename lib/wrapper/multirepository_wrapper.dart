@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../repository/post_repo.dart';
+import '../repository/posts_repo.dart';
 
 class MultiRepositoryWrapper extends StatelessWidget {
   final Widget child;

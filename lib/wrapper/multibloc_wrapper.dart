@@ -1,5 +1,6 @@
+import 'package:exercise_json/cubit/comments_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_cubit.dart';
-import 'package:exercise_json/repository/post_repo.dart';
+import 'package:exercise_json/repository/posts_repo.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +13,12 @@ class MultiBlocWrapper extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider(
           create: (context) => NoteListingCubit(
-              notesRepository: RepositoryProvider.of<NotesRepository>(context)))
+              notesRepository:
+                  RepositoryProvider.of<NotesRepository>(context))),
+      BlocProvider(
+          create: (context) => CommentListingCubit(
+              notesRepository:
+                  RepositoryProvider.of<NotesRepository>(context))),
     ], child: child);
   }
 }

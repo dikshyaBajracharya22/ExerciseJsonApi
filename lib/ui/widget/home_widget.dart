@@ -1,5 +1,7 @@
+import 'package:exercise_json/cubit/comments_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_state.dart';
+import 'package:exercise_json/ui/screen/comments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -24,7 +26,8 @@ class _HomeWidgetState extends State<HomeWidget> {
     return BlocListener<NoteListingCubit, NoteListingState>(
       listener: ((context, state) {
         if (state is NoteSuccessState) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Succes")));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Success")));
         } else if (state is NoteErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text(
@@ -39,9 +42,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           title: const Text(
             "Posts App",
             style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w500),
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
           ),
           elevation: 0,
           backgroundColor: Colors.green[300],
@@ -65,9 +66,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                       elevation: 5,
                       margin: EdgeInsets.all(8),
                       child: ListTile(
-                        onTap: () {},
-                        title: Text(state.notes[index].title, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),),
-                        subtitle: Text(state.notes[index].body),
+                        onTap: () async {
+                          context
+                              .read<CommentListingCubit>()
+                              .fetchComments(state.notes[index].id);
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return CommentsScreen(title: state.notes[index].title,);
+                          }));
+                        },
+                        leading: Container(
+                          child: const Image(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/post.jpg")),
+                        ),
+                        title: Text(
+                          state.notes[index].title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 19),
+                        ),
+                        subtitle: Container(
+                          margin: EdgeInsets.only(top: 7),
+                          child: Text(state.notes[index].body,
+                              textAlign: TextAlign.justify, style: TextStyle(color: Colors.grey),),
+                        ),
                         trailing: IconButton(
                             onPressed: () {}, icon: const Icon(Icons.delete)),
                       ),
