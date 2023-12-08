@@ -5,11 +5,12 @@ import '../widget/comments_widget.dart';
 
 class CommentsScreen extends StatelessWidget {
   final String title;
-  const CommentsScreen({super.key, required this.title,});
+  final int id;
+  const CommentsScreen({super.key, required this.title, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    return CommentsWidget(title: title,
+    return CommentsWidget(title: title,id: id,
     );
   }
 }

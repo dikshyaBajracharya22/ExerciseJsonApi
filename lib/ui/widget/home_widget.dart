@@ -72,7 +72,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                               .fetchComments(state.notes[index].id);
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return CommentsScreen(title: state.notes[index].title,);
+                            return CommentsScreen(
+                              title: state.notes[index].title,
+                              id: state.notes[index].id,
+                            );
                           }));
                         },
                         leading: Container(
@@ -87,8 +90,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                         subtitle: Container(
                           margin: EdgeInsets.only(top: 7),
-                          child: Text(state.notes[index].body,
-                              textAlign: TextAlign.justify, style: TextStyle(color: Colors.grey),),
+                          child: Text(
+                            state.notes[index].body,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ),
                         trailing: IconButton(
                             onPressed: () {}, icon: const Icon(Icons.delete)),

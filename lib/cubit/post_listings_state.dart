@@ -1,4 +1,5 @@
 import 'package:exercise_json/model/comments.dart';
+import 'package:flutter/widgets.dart';
 
 import '../model/post_model.dart';
 
@@ -23,4 +24,9 @@ class NoteSuccessState extends NoteListingState {
 class CommentSuccessState extends NoteListingState {
   final List<Comments> comments;
   CommentSuccessState({required this.comments});
+}
+
+class AddCommentsSuccessState extends NoteListingState {
+  final List<Comments> addComments;
+  AddCommentsSuccessState({required this.addComments});
 }

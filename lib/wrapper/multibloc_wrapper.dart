@@ -1,3 +1,4 @@
+import 'package:exercise_json/cubit/add_comment_cubit.dart';
 import 'package:exercise_json/cubit/comments_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_cubit.dart';
 import 'package:exercise_json/repository/posts_repo.dart';
@@ -17,6 +18,10 @@ class MultiBlocWrapper extends StatelessWidget {
                   RepositoryProvider.of<NotesRepository>(context))),
       BlocProvider(
           create: (context) => CommentListingCubit(
+              notesRepository:
+                  RepositoryProvider.of<NotesRepository>(context))),
+      BlocProvider(
+          create: (context) => AddCommentCubit(
               notesRepository:
                   RepositoryProvider.of<NotesRepository>(context))),
     ], child: child);

@@ -1,16 +1,14 @@
 import 'package:exercise_json/cubit/comments_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_state.dart';
+import 'package:exercise_json/ui/screen/add_comment_form_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommentsWidget extends StatefulWidget {
   final String title;
-  const CommentsWidget({
-    super.key,
-    required this.title,
-  });
+  final int id;
+  const CommentsWidget({super.key, required this.title, required this.id});
 
   @override
   State<CommentsWidget> createState() => _CommentsWidgetState();
@@ -68,24 +66,61 @@ class _CommentsWidgetState extends State<CommentsWidget> {
               height: 15,
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 27),
+              margin: EdgeInsets.symmetric(horizontal: 27),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Icon(
+                children: [
+                  const Icon(
                     Icons.comment,
                   ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text(
+                  const Text(
                     "Comments",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 17,
                     ),
                   ),
+                  const SizedBox(
+                    width: 22,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return AddCommentScreen(
+                          postId: widget.id,
+                        );
+                      }));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: 4,
+                      ),
+                      height: 30,
+                      width: 160,
+                      color: Colors.green.shade500,
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.add_comment,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Add Comment",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
