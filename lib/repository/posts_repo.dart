@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:exercise_json/model/comments.dart';
 import 'package:exercise_json/model/data_response.dart';
+import 'package:exercise_json/model/users.dart';
 
 import '../model/post_model.dart';
 
@@ -11,7 +12,10 @@ class NotesRepository {
 
   List<Notes> _notes = [];
   List<Comments> _comments = [];
+  List<Users> users = [];
+
   List<Notes> get notes => _notes;
+  // List<Users> get users => _users;
 //Get Posts
   Future<DataResponse> fetchNotes() async {
     try {
@@ -77,6 +81,27 @@ class NotesRepository {
       }
     } on SocketException catch (e) {
       return DataResponse.error("No Internet connection");
+    } catch (e) {
+      return DataResponse.error(e.toString());
+    }
+  }
+  //Fetch Users
+
+  Future<DataResponse> fetchUsers() async {
+    try {
+      final _response =
+          await _dio.get("https://jsonplaceholder.typicode.com/users");
+      if (_response.statusCode == 200 || _response.statusCode == 201) {
+        final _temp = List.from(_response.data);
+        final _data = _temp.map((e) => Map<String, dynamic>.from(e)).toList();
+
+        users = _data.map((e) => Users.jsoon(e)).toList();
+        return DataResponse.success(users);
+      } else {
+        return DataResponse.error("Unable to Load Users");
+      }
+    } on SocketException catch (e) {
+      return DataResponse.error("No Internet Connection");
     } catch (e) {
       return DataResponse.error(e.toString());
     }

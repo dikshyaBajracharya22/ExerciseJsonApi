@@ -1,10 +1,12 @@
 import 'package:exercise_json/cubit/comments_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_state.dart';
+import 'package:exercise_json/cubit/users_cubit.dart';
 import 'package:exercise_json/ui/screen/comments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loading_overlay/loading_overlay.dart';
+
+import '../screen/user_screen.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -27,7 +29,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       listener: ((context, state) {
         if (state is NoteSuccessState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Success")));
+              .showSnackBar(const SnackBar(content: Text("Success")));
         } else if (state is NoteErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text(
@@ -39,6 +41,17 @@ class _HomeWidgetState extends State<HomeWidget> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  context.read<UsersCubit>().fetchUsers();
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const UserScreen();
+                  }));
+                },
+                icon: const Icon(Icons.person)),
+          ],
           title: const Text(
             "Posts App",
             style: TextStyle(
@@ -78,22 +91,20 @@ class _HomeWidgetState extends State<HomeWidget> {
                             );
                           }));
                         },
-                        leading: Container(
-                          child: const Image(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/post.jpg")),
-                        ),
+                        leading: const Image(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/post.jpg")),
                         title: Text(
                           state.notes[index].title,
                           style: const TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 19),
                         ),
                         subtitle: Container(
-                          margin: EdgeInsets.only(top: 7),
+                          margin: const EdgeInsets.only(top: 7),
                           child: Text(
                             state.notes[index].body,
                             textAlign: TextAlign.justify,
-                            style: TextStyle(color: Colors.grey),
+                            style: const TextStyle(color: Colors.grey),
                           ),
                         ),
                         trailing: IconButton(

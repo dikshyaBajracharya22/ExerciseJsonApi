@@ -2,6 +2,7 @@ import 'package:exercise_json/model/comments.dart';
 import 'package:flutter/widgets.dart';
 
 import '../model/post_model.dart';
+import '../model/users.dart';
 
 abstract class NoteListingState {}
 
@@ -29,4 +30,9 @@ class CommentSuccessState extends NoteListingState {
 class AddCommentsSuccessState extends NoteListingState {
   final List<Comments> addComments;
   AddCommentsSuccessState({required this.addComments});
+}
+
+class LoadUsersSuccessState extends NoteListingState {
+  final List<Users> users;
+  LoadUsersSuccessState({required this.users});
 }
