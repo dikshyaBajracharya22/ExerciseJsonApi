@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:exercise_json/model/comments.dart';
 import 'package:exercise_json/model/data_response.dart';
+import 'package:exercise_json/model/todos.dart';
 import 'package:exercise_json/model/users.dart';
 
 import '../model/post_model.dart';
@@ -13,6 +14,7 @@ class NotesRepository {
   List<Notes> _notes = [];
   List<Comments> _comments = [];
   List<Users> users = [];
+  List<Todos> todos = [];
 
   List<Notes> get notes => _notes;
   // List<Users> get users => _users;
@@ -102,6 +104,27 @@ class NotesRepository {
       }
     } on SocketException catch (e) {
       return DataResponse.error("No Internet Connection");
+    } catch (e) {
+      return DataResponse.error(e.toString());
+    }
+  }
+
+  //Todos
+
+  Future<DataResponse> loadTodos({required userId}) async {
+    final _response = await _dio
+        .get("https://jsonplaceholder.typicode.com/users/$userId/todos");
+    try {
+      if (_response.statusCode == 200 || _response.statusCode == 201) {
+        final _temp = List.from(_response.data);
+        final _data = _temp.map((e) => Map<String, dynamic>.from(e)).toList();
+        todos = _data.map((e) => Todos.jsoon(e)).toList();
+        return DataResponse.success(todos);
+      } else {
+        return DataResponse.error("Unable to load Todos");
+      }
+    } on SocketException catch (e) {
+      return DataResponse.error("NO Internet Connection");
     } catch (e) {
       return DataResponse.error(e.toString());
     }

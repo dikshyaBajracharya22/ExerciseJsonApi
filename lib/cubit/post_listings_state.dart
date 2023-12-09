@@ -1,4 +1,5 @@
 import 'package:exercise_json/model/comments.dart';
+import 'package:exercise_json/model/todos.dart';
 import 'package:flutter/widgets.dart';
 
 import '../model/post_model.dart';
@@ -35,4 +36,9 @@ class AddCommentsSuccessState extends NoteListingState {
 class LoadUsersSuccessState extends NoteListingState {
   final List<Users> users;
   LoadUsersSuccessState({required this.users});
+}
+
+class LoadTodosSuccessState extends NoteListingState {
+  final List<Todos> todos;
+  LoadTodosSuccessState({required this.todos});
 }

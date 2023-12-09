@@ -2,10 +2,12 @@ import 'package:exercise_json/cubit/comments_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_state.dart';
 import 'package:exercise_json/cubit/users_cubit.dart';
+import 'package:exercise_json/model/todos.dart';
 import 'package:exercise_json/ui/screen/comments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../cubit/todos_cubit.dart';
 import '../screen/user_screen.dart';
 
 class HomeWidget extends StatefulWidget {
