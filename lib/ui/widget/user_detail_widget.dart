@@ -1,5 +1,8 @@
+import 'package:exercise_json/cubit/add_todos_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_state.dart';
 import 'package:exercise_json/cubit/todos_cubit.dart';
+import 'package:exercise_json/ui/screen/add_todo_form_screen.dart';
+import 'package:exercise_json/ui/widget/add_todo_form_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -48,69 +51,93 @@ class _UserDetailWidgetState extends State<UserDetailWidget> {
               elevation: 0,
               backgroundColor: Colors.green[300],
             ),
-            body: TabBarView(children: [
-              BlocBuilder<TodosCubit, NoteListingState>(
-                builder: (context, state) {
-                  if (state is NoteLoadingState) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is LoadTodosSuccessState) {
-                    return ListView.builder(
-                        itemCount: state.todos.length,
-                        itemBuilder: (context1, index) {
-                          return Card(
-                            color: const Color.fromARGB(255, 233, 243, 234),
-                            elevation: 3,
-                            margin: const EdgeInsets.all(8),
-                            child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+            body: Column(
+              children: [
+                Container(
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return AddTodoScreen(
+                          userId: widget.userId,
+                        );
+                      }));
+                    },
+                    child: Text(
+                      "Add Todo",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: Colors.lightBlue,
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(children: [
+                    BlocBuilder<TodosCubit, NoteListingState>(
+                      builder: (context, state) {
+                        if (state is NoteLoadingState) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (state is LoadTodosSuccessState) {
+                          return ListView.builder(
+                              itemCount: state.todos.length,
+                              itemBuilder: (context1, index) {
+                                return Card(
+                                  color:
+                                      const Color.fromARGB(255, 233, 243, 234),
+                                  elevation: 3,
+                                  margin: const EdgeInsets.all(8),
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 10),
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          "${state.todos[index].title}",
-                                          textAlign: TextAlign.left,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 17),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${state.todos[index].title}",
+                                                textAlign: TextAlign.left,
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 17),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                  "completed: ${state.todos[index].completed.toString()}",
+                                                  style: const TextStyle(
+                                                      color: Colors.black87)),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                            "completed: ${state.todos[index].completed.toString()}",
-                                            style: const TextStyle(
-                                                color: Colors.black87)),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
+                                        state.todos[index].completed
+                                            ? Icon(Icons.task_alt)
+                                            : Icon(Icons.highlight_off),
                                       ],
                                     ),
                                   ),
-                                  state.todos[index].completed
-                                      ? Icon(Icons.task_alt)
-                                      : Icon(Icons.highlight_off),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-              Container(
-                child: Text("Albums"),
-              ),
-               Container(
-                child: Text("Posts"),
-              )
-            ]),
+                                );
+                              });
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                    Container(
+                      child: Text("Albums"),
+                    ),
+                    Container(
+                      child: Text("Posts"),
+                    )
+                  ]),
+                ),
+              ],
+            ),
           ),
         ));
   }

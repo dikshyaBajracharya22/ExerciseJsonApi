@@ -1,4 +1,5 @@
 import 'package:exercise_json/cubit/add_comment_cubit.dart';
+import 'package:exercise_json/cubit/add_todos_cubit.dart';
 import 'package:exercise_json/cubit/comments_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_cubit.dart';
 import 'package:exercise_json/cubit/todos_cubit.dart';
@@ -32,6 +33,10 @@ class MultiBlocWrapper extends StatelessWidget {
                   RepositoryProvider.of<NotesRepository>(context))),
       BlocProvider(
           create: (context) => TodosCubit(
+              notesRepository:
+                  RepositoryProvider.of<NotesRepository>(context))),
+      BlocProvider(
+          create: (context) => AddTodosCubit(
               notesRepository:
                   RepositoryProvider.of<NotesRepository>(context))),
     ], child: child);

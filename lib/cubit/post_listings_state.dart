@@ -42,3 +42,8 @@ class LoadTodosSuccessState extends NoteListingState {
   final List<Todos> todos;
   LoadTodosSuccessState({required this.todos});
 }
+
+class AddTodoSuccessState extends NoteListingState {
+  final List<Todos> todos;
+  AddTodoSuccessState({required this.todos});
+}
