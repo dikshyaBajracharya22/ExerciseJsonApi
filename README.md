@@ -3,7 +3,7 @@
 This application is made using Bloc/Cubit state management.
 
 Firstly, a screen is shown that lists all the posts from the api.
-When clicked on the post, comments of posts are displayed. A new comment can be added from there after filling the form of name, email and comment. 
+When clicked on the post, comments of posts are displayed. A new comment can be added from there after filling the form with name, email and comment. 
 The list of users can be viewed on clicking the users icon on appbar of post page. When clicking the user, a todo page through tabbar is displayed and the todo
 can be added, updated and deleted as well.
 
