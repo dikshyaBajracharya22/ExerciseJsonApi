@@ -1,4 +1,4 @@
-# exercise_json
+# Exercise Task App
 
 This application is made using Bloc/Cubit state management.
 
