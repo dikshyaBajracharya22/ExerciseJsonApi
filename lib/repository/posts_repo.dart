@@ -154,4 +154,52 @@ class NotesRepository {
       return DataResponse.error(e.toString());
     }
   }
+
+//update todo
+  Future<DataResponse> updateTodo(
+      {required userId, required title, required completed}) async {
+    final _body = [
+      {
+        "userId": userId,
+        "title": title,
+        "completed": completed,
+      }
+    ];
+    final _response = await _dio
+        .put("https://jsonplaceholder.typicode.com/todos/$userId", data: _body);
+    print(_response.data);
+    print(_response.statusCode);
+
+    try {
+      if (_response.statusCode == 200 || _response.statusCode == 201) {
+        return DataResponse.success([_response]);
+      } else {
+        return DataResponse.error("Unable to update");
+      }
+    } on SignalException catch (e) {
+      return DataResponse.error("No Internet Connection");
+    } catch (e) {
+      return DataResponse.error(e.toString());
+    }
+  }
+  //delete todo
+  Future<DataResponse> deleteTodo({required id}) async {
+
+    final _response = await _dio
+        .delete("https://jsonplaceholder.typicode.com/todos/$id");
+    print(_response.data);
+    print(_response.statusCode);
+
+    try {
+      if (_response.statusCode == 200 || _response.statusCode == 201) {
+        return DataResponse.success([]);
+      } else {
+        return DataResponse.error("Unable to delete");
+      }
+    } on SignalException catch (e) {
+      return DataResponse.error("No Internet Connection");
+    } catch (e) {
+      return DataResponse.error(e.toString());
+    }
+  }
 }

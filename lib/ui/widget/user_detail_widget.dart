@@ -1,8 +1,10 @@
 import 'package:exercise_json/cubit/add_todos_cubit.dart';
+import 'package:exercise_json/cubit/delete_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_state.dart';
 import 'package:exercise_json/cubit/todos_cubit.dart';
 import 'package:exercise_json/ui/screen/add_todo_form_screen.dart';
 import 'package:exercise_json/ui/widget/add_todo_form_widget.dart';
+import 'package:exercise_json/ui/widget/update_todo_form_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -21,16 +23,31 @@ class _UserDetailWidgetState extends State<UserDetailWidget> {
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 3,
-        child: BlocListener<TodosCubit, NoteListingState>(
-          listener: (context, state) {
-            if (state is LoadTodosSuccessState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Succesfully Loaded Todos")));
-            } else if (state is NoteErrorState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Succesfully Loaded Todos")));
-            }
-          },
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<TodosCubit, NoteListingState>(
+              listener: (context, state) {
+                if (state is LoadTodosSuccessState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Succesfully Loaded Todos")));
+                } else if (state is NoteErrorState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Unable to load Todos")));
+                }
+              },
+            ),
+            BlocListener<DeleteTodoCubit, NoteListingState>(
+              listener: (context, state) {
+                if (state is DeleteSuccessState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Succesfully Deleted Todo")));
+                } else if (state is NoteErrorState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Unable to delete Todos")));
+                }
+              },
+            ),
+          ],
           child: Scaffold(
             appBar: AppBar(
               bottom: const TabBar(
@@ -54,6 +71,9 @@ class _UserDetailWidgetState extends State<UserDetailWidget> {
             body: Column(
               children: [
                 Container(
+                  alignment: Alignment.centerRight,
+                  width: 125,
+                  margin: EdgeInsets.only(left: 220),
                   child: MaterialButton(
                     onPressed: () {
                       Navigator.of(context)
@@ -63,11 +83,22 @@ class _UserDetailWidgetState extends State<UserDetailWidget> {
                         );
                       }));
                     },
-                    child: Text(
-                      "Add Todo",
-                      style: TextStyle(color: Colors.white),
+                    color: Colors.green,
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Add Todo",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
                     ),
-                    color: Colors.lightBlue,
                   ),
                 ),
                 Expanded(
@@ -112,12 +143,78 @@ class _UserDetailWidgetState extends State<UserDetailWidget> {
                                               const SizedBox(
                                                 height: 5,
                                               ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 10),
+                                                    child: MaterialButton(
+                                                      color: Colors
+                                                          .blueAccent.shade100,
+                                                      onPressed: () {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) {
+                                                          return UpdateTodoFormWidget(
+                                                              userId: state
+                                                                  .todos[index]
+                                                                  .id);
+                                                        }));
+                                                      },
+                                                      child: Container(
+                                                        // width: 140,
+
+                                                        child: Row(
+                                                          children: const [
+                                                            Icon(
+                                                              Icons.edit,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            Text(
+                                                              "Update Todo",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  // SizedBox(
+                                                  //   width: 40,
+                                                  // ),
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ),
                                         state.todos[index].completed
                                             ? Icon(Icons.task_alt)
                                             : Icon(Icons.highlight_off),
+                                        InkWell(
+                                          onTap: () {
+                                            context
+                                                .read<DeleteTodoCubit>()
+                                                .deleteTodo(
+                                                    id: state.todos[index].id);
+                                          },
+                                          child: Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              )),
+                                        )
                                       ],
                                     ),
                                   ),

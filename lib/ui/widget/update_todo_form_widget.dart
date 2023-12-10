@@ -1,41 +1,42 @@
 import 'package:exercise_json/cubit/add_todos_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_state.dart';
+import 'package:exercise_json/cubit/update_todo_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddTodoWidget extends StatefulWidget {
+class UpdateTodoFormWidget extends StatefulWidget {
   final int userId;
-  const AddTodoWidget({super.key, required this.userId});
+  const UpdateTodoFormWidget({super.key, required this.userId});
 
   @override
-  State<AddTodoWidget> createState() => _AddTodoWidgetState();
+  State<UpdateTodoFormWidget> createState() => _UpdateTodoFormWidgetState();
 }
 
-class _AddTodoWidgetState extends State<AddTodoWidget> {
+class _UpdateTodoFormWidgetState extends State<UpdateTodoFormWidget> {
   TextEditingController titleController = TextEditingController();
   bool? selectedstatus;
 
   @override
   Widget build(BuildContext context) {
     List<bool?> options = [null, true, false];
-    return BlocListener<AddTodosCubit, NoteListingState>(
+    return BlocListener<UpdateTodoCubit, NoteListingState>(
       listener: (context, state) {
-        if (state is AddTodoSuccessState) {
+        if (state is UpdateTodoSuccessState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Successfully todo added")));
+              .showSnackBar(const SnackBar(content: Text("Successfully todo updated")));
         } else if (state is NoteErrorState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Unable to add todo")));
+              .showSnackBar(SnackBar(content: Text("Unable to update todo")));
         }
       },
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: const Text(
-            "Add Todo Form",
+            "Update Todo Form",
             style: TextStyle(
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
           ),
@@ -92,13 +93,13 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
                 child: MaterialButton(
                   color: Colors.red,
                   onPressed: () async {
-                    context.read<AddTodosCubit>().addTodos(
+                    context.read<UpdateTodoCubit>().updateTodos(
                         userId: widget.userId,
                         title: titleController.text,
                         completed: selectedstatus!);
                   },
                   child: const Text(
-                    "Save Todo",
+                    "Update Todo",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

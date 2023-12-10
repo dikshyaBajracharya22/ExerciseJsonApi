@@ -1,8 +1,10 @@
 import 'package:exercise_json/cubit/add_comment_cubit.dart';
 import 'package:exercise_json/cubit/add_todos_cubit.dart';
 import 'package:exercise_json/cubit/comments_cubit.dart';
+import 'package:exercise_json/cubit/delete_cubit.dart';
 import 'package:exercise_json/cubit/post_listings_cubit.dart';
 import 'package:exercise_json/cubit/todos_cubit.dart';
+import 'package:exercise_json/cubit/update_todo_cubit.dart';
 import 'package:exercise_json/cubit/users_cubit.dart';
 import 'package:exercise_json/repository/posts_repo.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -37,6 +39,14 @@ class MultiBlocWrapper extends StatelessWidget {
                   RepositoryProvider.of<NotesRepository>(context))),
       BlocProvider(
           create: (context) => AddTodosCubit(
+              notesRepository:
+                  RepositoryProvider.of<NotesRepository>(context))),
+      BlocProvider(
+          create: (context) => UpdateTodoCubit(
+              notesRepository:
+                  RepositoryProvider.of<NotesRepository>(context))),
+      BlocProvider(
+          create: (context) => DeleteTodoCubit(
               notesRepository:
                   RepositoryProvider.of<NotesRepository>(context))),
     ], child: child);

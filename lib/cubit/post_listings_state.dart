@@ -47,3 +47,14 @@ class AddTodoSuccessState extends NoteListingState {
   final List<Todos> todos;
   AddTodoSuccessState({required this.todos});
 }
+
+class UpdateTodoSuccessState extends NoteListingState {
+  final List<Todos> todos;
+
+  UpdateTodoSuccessState({required this.todos});
+}
+
+class DeleteSuccessState extends NoteListingState {
+  final List<Todos> todo;
+  DeleteSuccessState({required this.todo});
+}
