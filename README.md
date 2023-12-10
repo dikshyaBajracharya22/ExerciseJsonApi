@@ -15,3 +15,5 @@ Firstly, a screen is shown to list all the posts from the api.
 <img src="https://github.com/dikshyaBajracharya22/ExerciseJsonApi/assets/92141558/53ab370a-028f-47bb-9ab0-69780a0c5c53" width="200", height="400">
 <img src="https://github.com/dikshyaBajracharya22/ExerciseJsonApi/assets/92141558/f9efcb7f-ab0b-4c4b-8d7c-605267ff97e3" width="200", height="400">
 <img src="https://github.com/dikshyaBajracharya22/ExerciseJsonApi/assets/92141558/21add829-369d-4f11-b0c4-61e59955e83c" width="200", height="400">
+<img src="https://github.com/dikshyaBajracharya22/ExerciseJsonApi/assets/92141558/62f7f5d4-0c1f-4569-819f-8f6f28cb07b8" width="200", height="400">
+
